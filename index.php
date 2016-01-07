@@ -2,6 +2,7 @@
 
 $nb_test = 5000;
 
+# Source : http://www.derepas.com/petco/french.html
 $jets = array(
 	array('proba' => 37, 'name' => 'Flanc rose'),
 	array('proba' => 28, 'name' => 'Flanc noir'),
@@ -57,7 +58,6 @@ function double_jet() {
 	$jet1 = jet();
 	$jet2 = jet();
 	$combinaison_key = $jet1['name'].' '.$jet2['name'];
-	log_cochon($combinaison_key."<br/>"); 
 	return $combinaisions[$combinaison_key];
 }
 
@@ -74,12 +74,10 @@ function jet() {
 function tour($seuil=20, $total=0) {
 	$point = double_jet();
 	if($point==0) {
-		log_cochon('<strong>0</strong><hr/>');
 		return 0;
 	} else {
 		$total_current = $point + $total;
 		if($total_current >= $seuil) {
-			log_cochon('<strong>'.$total_current.'</strong><hr/>');
 			return $total_current; 
 		} else {
 			return tour($seuil, $total_current);
@@ -101,14 +99,7 @@ function game($seuil) {
 	return $nb_tour;
 }
 
-function log_cochon($log) {
-	// echo $log;
-}
-
-
-
 ?>
-
 <html>
   <head>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -121,7 +112,7 @@ function log_cochon($log) {
         data.addColumn('number', 'Nombre de tour');
         data.addRows([
 		<?php
-		for ($i = 1; $i <= 80; $i++) {
+		for ($i = 1; $i <= 100; $i++) {
 			$total_test = 0;
 			for ($y = 1; $y <= $nb_test; $y++) {
 				$total_test += game($i);
@@ -143,9 +134,8 @@ function log_cochon($log) {
     </script>
   </head>
   <body>
-	<h1>Nombre de tour nécessaire par seuil</h1>
+	<h2>Nombre de tour nécessaire pour gagner en fonction du seuil de point par tour</h2>
     <div id="chart_div" style="width: 900px; height: 500px;"></div>
-	<h1>Détails des parties</h1>
   </body>
 </html>
 
